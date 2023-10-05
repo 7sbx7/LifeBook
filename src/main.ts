@@ -3,4 +3,19 @@ import App from './App.vue'
 import router from './router'
 import './assets/scss/main.scss';
 
-createApp(App).use(router).mount('#app')
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+/* import specific icons */
+import { faUserSecret, faLock } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faEnvelope } from '@fortawesome/free-regular-svg-icons'
+/* add icons to the library */
+library.add(faUserSecret)
+library.add(faLock)
+library.add(faUser)
+library.add(faEnvelope)
+
+createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

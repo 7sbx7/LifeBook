@@ -14,7 +14,7 @@
       }"
     >
       <v-nav-button
-        to="/login"
+        to="/auth"
         content="Login"
         secondary-nav
         noBorderDesktop
@@ -70,6 +70,7 @@ export default defineComponent({
 }
 
 .nav-mobile {
+  padding-top: 64px;
   display: flex;
   opacity: 0;
   position: absolute;

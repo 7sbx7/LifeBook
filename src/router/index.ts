@@ -10,15 +10,16 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView
   },
   {
+    path: '/auth',
+    name: 'auth',
+    component: AuthenticationView
+  },
+  {
     path: '/about',
     name: 'about',
     component: AboutView
   },
-  {
-    path: '/auth',
-    name: 'auth',
-    component: AuthenticationView
-  }
+
 ]
 
 const router = createRouter({

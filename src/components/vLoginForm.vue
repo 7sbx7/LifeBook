@@ -21,8 +21,7 @@
 import { defineComponent, ref } from 'vue';
 import vForm from './atoms/vForm.vue';
 import { useAuth } from '@/composables/useAuth';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import router from '@/router';
+import { getAuth } from 'firebase/auth';
 
 export default defineComponent({
   name: 'vHamburger',
@@ -36,17 +35,8 @@ export default defineComponent({
 
     const email = ref<string>('');
     const password = ref<string>('');
-
-    const handleLogin = async () => {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
-        if (userCredential.user) {
-          router.push({ name: 'home' });
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
+      
+    const handleLogin = async () => useAuth(auth).handleLogin(email.value, password.value)
 
     return {
       user,

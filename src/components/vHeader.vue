@@ -20,12 +20,14 @@
         noBorderDesktop
         @click="navigationOpened = false"
       />
+
       <v-nav-button
         to="/"
         content="Home"
         primary-nav
         @click="navigationOpened = false"
       />
+
       <v-nav-button
         to="/about"
         content="About"
@@ -43,14 +45,18 @@ import vLogo from "./atoms/vLogo.vue";
 import vNavButton from "./atoms/vNavButton.vue";
 import vHamburger from "./atoms/vHamburger.vue";
 import useWindowWidth from "../composables/useWindowWidth";
+import { getAuth } from 'firebase/auth';
 
 export default defineComponent({
   name: "vHeader",
   components: { vLogo, vNavButton, vHamburger },
   setup() {
     let { isMobile } = useWindowWidth();
+    let auth = getAuth();
+    console.log(auth.currentUser);
 
     return {
+      auth,
       isMobile,
     };
   },

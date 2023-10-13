@@ -76,7 +76,7 @@ export default defineComponent({
 
   .form-input {
     margin: 15px 0;
-    height: 40px;
+    height: 55px;
     border-radius: 24px;
     box-shadow: 0px 5px 30px -7px rgba(86, 160, 250, 0.664);
     display: flex;

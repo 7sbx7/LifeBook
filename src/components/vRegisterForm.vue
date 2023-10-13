@@ -24,6 +24,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import vForm from './atoms/vForm.vue';
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
+import router from '@/router';
 
 export default defineComponent({
   name: 'vHamburger',
@@ -32,13 +34,27 @@ export default defineComponent({
   },
   setup() {
     const authType = ref<string>('login');
+
     const login = ref<string>('');
     const email = ref<string>('')
     const password = ref<string>('')
 
-    function handleRegister() {
-      console.log('12321');
-    }
+    const auth = getAuth();
+
+    const handleRegister = async () => {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+        const user = userCredential.user;
+
+        await updateProfile(user, {
+          displayName: login.value,
+        });
+
+        router.go(0);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
     return {
       login,

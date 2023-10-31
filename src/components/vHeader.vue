@@ -7,6 +7,7 @@
       @openNav="navigationOpened = !navigationOpened"
     />
     <nav
+      v-if="isUserLoggedIn"
       :class="{
         'nav-desktop': !isMobile,
         'nav-mobile': isMobile,
@@ -40,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import vLogo from "./atoms/vLogo.vue";
 import vNavButton from "./atoms/vNavButton.vue";
 import vHamburger from "./atoms/vHamburger.vue";
@@ -55,18 +56,19 @@ export default defineComponent({
     let { isMobile } = useWindowWidth();
     let auth = getAuth();
     let store = useStore()
+    let isUserLoggedIn = ref(store.getters.userLoggedIn)
 
-    function refreshauth(){
-      let isUserLoggedIn = store.getters.user.loggedIn
-      console.log('isUserLoggedIn', isUserLoggedIn);
-    }
-    
+    watch (
+      () => store.getters.userLoggedIn,
+      (newValue) => {
+        isUserLoggedIn.value = newValue
+      }
+    )
 
     return {
       auth,
       isMobile,
-      // isUserLoggedIn,
-      refreshauth
+      isUserLoggedIn,
     };
   },
   data() {

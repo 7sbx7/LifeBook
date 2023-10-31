@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import AuthenticationView from '../views/AuthenticationView.vue'
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { store } from '@/store';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -21,7 +21,6 @@ const routes: Array<RouteRecordRaw> = [
     name: 'about',
     component: AboutView,
   },
-
 ]
 
 const router = createRouter({
@@ -31,16 +30,15 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const auth = getAuth();
-
+  const userLoggedIn = store.getters.userLoggedIn
   // logged user tries to visit /auth page redirect to /
-  if(to.fullPath === '/auth' && auth.currentUser) {
+  if(to.fullPath === '/auth' && userLoggedIn) {
     next('/')
     return
   }
   // secure auth required routes.
   if (requiresAuth) {
-    if (auth.currentUser) {
+    if (userLoggedIn) {
       next();
     } else {
       next({ name: 'auth' });

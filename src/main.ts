@@ -2,8 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/scss/main.scss';
-import './firebase/init.ts'
-
+import './firebase/init'
+import { store } from './store/index'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -18,4 +18,4 @@ library.add(faUser)
 library.add(faEnvelope)
 
 
-createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+createApp(App).use(router).use(store).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

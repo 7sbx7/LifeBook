@@ -5,8 +5,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { signOut, getAuth } from 'firebase/auth';
-import router from '@/router';
+import { useAuth } from '@/composables/useAuth';
+import { getAuth } from 'firebase/auth';
 
 export default defineComponent({
   name: 'HomeView',
@@ -14,15 +14,7 @@ export default defineComponent({
   },
   setup() {
     const auth = getAuth();
-
-    const handleLogout = async () => {
-      try {
-        await signOut(auth);
-        router.push('/auth')
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    const handleLogout = async () => useAuth(auth).handleLogout()
 
     return {
       handleLogout

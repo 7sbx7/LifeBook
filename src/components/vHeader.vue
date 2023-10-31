@@ -46,6 +46,7 @@ import vNavButton from "./atoms/vNavButton.vue";
 import vHamburger from "./atoms/vHamburger.vue";
 import useWindowWidth from "../composables/useWindowWidth";
 import { getAuth } from 'firebase/auth';
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "vHeader",
@@ -53,11 +54,19 @@ export default defineComponent({
   setup() {
     let { isMobile } = useWindowWidth();
     let auth = getAuth();
-    console.log(auth.currentUser);
+    let store = useStore()
+
+    function refreshauth(){
+      let isUserLoggedIn = store.getters.user.loggedIn
+      console.log('isUserLoggedIn', isUserLoggedIn);
+    }
+    
 
     return {
       auth,
       isMobile,
+      // isUserLoggedIn,
+      refreshauth
     };
   },
   data() {

@@ -1,7 +1,8 @@
 import { ref } from 'vue';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User, Auth } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, Auth } from 'firebase/auth';
 import { db } from '../firebase/init'
 import router from '@/router';
+import { store } from '../store/index'
 
 export function useAuth(auth: Auth) {
   const user = ref<User | null>(null);
@@ -29,12 +30,23 @@ export function useAuth(auth: Auth) {
 
   async function handleLogin(email: string, password: string) {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      if (userCredential.user) {
-        router.push({ name: 'home' });
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      if (response.user) {
+        store.commit('SET_USER', response.user)
+        router.push({name: 'home'})
       }
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  async function handleLogout() {
+    try {
+      await signOut(auth);
+      store.commit('SET_USER', null)
+      router.push('/auth')
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -42,5 +54,6 @@ export function useAuth(auth: Auth) {
     user,
     handleRegister,
     handleLogin,
+    handleLogout
   };
 }

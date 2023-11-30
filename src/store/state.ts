@@ -1,7 +1,7 @@
 export default {
   user :{
     loggedIn: false,
-    data: null
+    data: null,
+    uid: null,
   },
-  currentUser: null,
 };

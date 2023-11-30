@@ -56,10 +56,10 @@ export default defineComponent({
     let { isMobile } = useWindowWidth();
     let auth = getAuth();
     let store = useStore()
-    let isUserLoggedIn = ref(store.getters.userLoggedIn)
+    let isUserLoggedIn = ref(store.getters.user.loggedIn)
 
     watch (
-      () => store.getters.userLoggedIn,
+      () => store.getters.user.loggedIn,
       (newValue) => {
         isUserLoggedIn.value = newValue
       }

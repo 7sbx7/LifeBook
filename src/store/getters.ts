@@ -1,8 +1,4 @@
 export default {
-  user(state) {
-    return state.user
-  },
-  userLoggedIn(state) {
-    return state.user.loggedIn
-  },
+  user: (state) => state.user,
+  // userLoggedIn: (state) => state.user.loggedIn,
 };

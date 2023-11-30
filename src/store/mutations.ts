@@ -1,9 +1,8 @@
 export default {
-  SET_LOGGED_IN(state, value) {
-    state.user.loggedIn = value
-  },
-  SET_USER(state, data) {
+  setUser(state, data) {
     state.user.data = data
     state.user.loggedIn = data !== null
+    state.user.uid = data.uid
   },
+
 };

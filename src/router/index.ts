@@ -30,7 +30,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const userLoggedIn = store.getters.userLoggedIn
+  const userLoggedIn = store.getters.user.loggedIn
   // logged user tries to visit /auth page redirect to /
   if(to.fullPath === '/auth' && userLoggedIn) {
     next('/')

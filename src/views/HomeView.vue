@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 import { useAuth } from '@/composables/useAuth';
 import { getAuth } from 'firebase/auth';
 import { useStore } from 'vuex';
@@ -18,16 +18,11 @@ export default defineComponent({
     const auth = getAuth();
     const handleLogout = async () => useAuth(auth).handleLogout()
 
-    const store = useStore();
-
-    onMounted(() => {
-      store.dispatch('user/fetchCurrentUser');
-    });
-    
-    const currentUser = computed(() => store.getters['user/currentUser']);
+    let store = useStore()
+    let currentUserUid = ref(store.getters.user.uid)
 
     const showUser = () => {
-      console.log(currentUser);
+      console.log(currentUserUid.value);
     };
 
     return {

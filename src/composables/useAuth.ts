@@ -32,7 +32,7 @@ export function useAuth(auth: Auth) {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       if (response.user) {
-        store.commit('SET_USER', response.user)
+        store.commit('setUser', response.user)
         router.push({name: 'home'})
       }
     } catch (err) {
@@ -43,7 +43,7 @@ export function useAuth(auth: Auth) {
   async function handleLogout() {
     try {
       await signOut(auth);
-      store.commit('SET_USER', null)
+      store.commit('setUser', null)
       router.push('/auth')
     } catch (error) {
       console.error(error);

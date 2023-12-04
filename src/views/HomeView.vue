@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue';
-import { useAuth } from '@/composables/useAuth';
+// import { useAuth } from '@/composables/useAuth';
 import { getAuth } from 'firebase/auth';
 import { useStore } from 'vuex';
 import { collection, doc, getDoc } from "firebase/firestore"; 
@@ -17,11 +17,16 @@ export default defineComponent({
   components: {
   },
   setup() {
-    const auth = getAuth();
-    const handleLogout = async () => useAuth(auth).handleLogout()
-
     let store = useStore()
-    let currentUserUid = ref(store.getters.user.uid)
+
+    const handleLogout = async () => {
+      try {
+        await store.dispatch('logout')
+      } catch (error) {
+        console.log('Logout failed: ', error);
+      }
+    }
+    // let currentUserUid = ref(store.getters.user.uid)
 
     const showUser = async () => {
       const usersRef = await getDoc(doc(db, 'users', 'mnobF1CZDuWqiKI4LNkx'))

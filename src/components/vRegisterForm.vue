@@ -23,10 +23,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-// import { getAuth } from 'firebase/auth';
 import vForm from './atoms/vForm.vue';
 import { useStore } from 'vuex';
-// import { useAuth } from '../composables/useAuth'
 
 export default defineComponent({
   name: 'vHamburger',

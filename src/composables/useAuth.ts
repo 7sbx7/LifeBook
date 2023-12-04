@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, Us
 import { db } from '../firebase/init'
 import router from '@/router';
 import { store } from '../store/index'
+import { doc, setDoc } from "firebase/firestore"; 
 
 export function useAuth(auth: Auth) {
   const user = ref<User | null>(null);
@@ -13,11 +14,9 @@ export function useAuth(auth: Auth) {
       const user = userCredential.user;
       console.log(user);
       try {
-        const collectionRef = db.collection('users'); 
-        await collectionRef.add({
-          uid: user.uid,
-          userName: login,
-        });
+        await setDoc(doc(db, 'users', user.uid), {
+          userName: login
+        })
         router.go(0);
       } catch (error) {
         user.delete()

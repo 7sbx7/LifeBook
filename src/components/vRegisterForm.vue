@@ -23,9 +23,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { getAuth } from 'firebase/auth';
 import vForm from './atoms/vForm.vue';
-import { useAuth } from '../composables/useAuth'
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'vHamburger',
@@ -37,10 +36,15 @@ export default defineComponent({
     const login = ref<string>('');
     const email = ref<string>('')
     const password = ref<string>('')
-    const auth = getAuth();
+    const store = useStore();
 
-    const handleRegister = async () => useAuth(auth).handleRegister(email.value, password.value, login.value)
-
+    const handleRegister = async () => {
+      try {
+        await store.dispatch('register', { email: email.value, password: password.value, login: login.value });
+      } catch (error) {
+        console.error('Login failed: ', error);
+      }
+    }
     return {
       login,
       email,
